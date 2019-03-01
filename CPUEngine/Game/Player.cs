@@ -10,7 +10,7 @@ namespace CPUEngine.Game
     {
         public static int x = 100;
         public static int y = 100;
-        public static int speed = 400; // px/sec
+        public static int speed = 200; // px/sec
         public static int rspeed = 90;
 
         public static int r = 0;
@@ -24,8 +24,6 @@ namespace CPUEngine.Game
         //called every frame by timer from MainWindow
         public static void PlayerMove(object sender, ElapsedEventArgs e)
         {
-            Console.WriteLine(MainWindow.GetCursor().X.ToString() + "  " + MainWindow.GetCursor().Y.ToString());
-
             if (MainWindow.keys.Contains(87) && EnginePhysics.RectangleCollision(collTop)) y -= speed / MainWindow.frametime;
             if (MainWindow.keys.Contains(83) && EnginePhysics.RectangleCollision(collBottom)) y += speed / MainWindow.frametime;
             if (MainWindow.keys.Contains(65) && EnginePhysics.RectangleCollision(collLeft)) x -= speed / MainWindow.frametime;
