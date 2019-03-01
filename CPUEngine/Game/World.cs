@@ -3,7 +3,7 @@ using CPUEngine.Engine;
 
 namespace CPUEngine.Game
 {
-    public static class World
+    public class World
     {
         public static Rectangle coll = new Rectangle(0, 710, 1280, 10);
 

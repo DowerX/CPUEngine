@@ -14,8 +14,9 @@ namespace CPUEngine
         public static int frametime = 33;   //Put in the optimal frametime (60 FPS => 16ms, 30FPS => 33ms)
         System.Timers.Timer timer = new System.Timers.Timer(frametime);
 
-        //Key states
+        //Input
         public static List<int> keys = new List<int>();
+        public static Point windowPosition = new Point();
 
         //custom
         #region
@@ -27,6 +28,8 @@ namespace CPUEngine
         {
             InitializeComponent();
             EngineGraphics.Init(1280, 720);
+
+            ResizeEnd += new EventHandler(WindowMoved); 
 
             //Set up Key Management
             KeyDown += new KeyEventHandler(ManageKeysDown);
@@ -64,6 +67,16 @@ namespace CPUEngine
         {
             if (keys.Contains(e.KeyValue)) keys.Remove(e.KeyValue);
         }
+
+        public static Point GetCursor()
+        {
+            return new Point(Cursor.Position.X - windowPosition.X - 8, Cursor.Position.Y - windowPosition.Y - 30);
+        }
+
+        public void WindowMoved(object sender, EventArgs e)
+        {
+            windowPosition = new Point(Left,Top);
+        }
         #endregion
 
         //Rendering loop
@@ -75,6 +88,7 @@ namespace CPUEngine
 
             //EngineGraphics.DrawRectangleBrush(Player.y, Player.x, 100, 100, EngineGraphics.brush);
             EngineGraphics.DrawRectangleCoordinatesImageExtra(Player.x, Player.y, 100, 100, Player.r, -1, 1, EngineGraphics.mc);
+            EngineGraphics.DrawRectangleCoordinatesBrush(GetCursor().X, GetCursor().Y, 10, 10, EngineGraphics.brush);
             World.DrawWorld();
 
             //Show new image

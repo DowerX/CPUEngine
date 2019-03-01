@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CPUEngine.Engine
 {
-    public static class EnginePhysics
+    public class EnginePhysics
     {
         public static List<Rectangle> colliders = new List<Rectangle>();
 

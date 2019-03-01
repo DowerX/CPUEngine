@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.Timers;
 using System.Drawing;
 using CPUEngine.Engine;
 
 namespace CPUEngine.Game
 {
-    public static class Player
+    public class Player : Form
     {
         public static int x = 100;
         public static int y = 100;
@@ -23,6 +24,8 @@ namespace CPUEngine.Game
         //called every frame by timer from MainWindow
         public static void PlayerMove(object sender, ElapsedEventArgs e)
         {
+            Console.WriteLine(MainWindow.GetCursor().X.ToString() + "  " + MainWindow.GetCursor().Y.ToString());
+
             if (MainWindow.keys.Contains(87) && EnginePhysics.RectangleCollision(collTop)) y -= speed / MainWindow.frametime;
             if (MainWindow.keys.Contains(83) && EnginePhysics.RectangleCollision(collBottom)) y += speed / MainWindow.frametime;
             if (MainWindow.keys.Contains(65) && EnginePhysics.RectangleCollision(collLeft)) x -= speed / MainWindow.frametime;
