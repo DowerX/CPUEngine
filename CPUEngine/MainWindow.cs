@@ -37,6 +37,7 @@ namespace CPUEngine
             KeyUp += new KeyEventHandler(ManageKeysUp);
 
             pictureBox1.MouseDown += new MouseEventHandler(ManageMouseDown);
+            pictureBox1.MouseUp += new MouseEventHandler(ManageMouseUp);
         }
 
         //After startup init
@@ -57,7 +58,14 @@ namespace CPUEngine
             //EngineAudio.AddSound("music", @"./xd.wav");
             //EngineAudio.Play("music", musicP);
 
-            EnginePhysics.colliders.Add(World.coll);
+            EngineGraphics.sprites.Add("minecraft", new Bitmap(@"./minecraft.png"));
+            EngineGraphics.brushes.Add("white",new SolidBrush(Color.White));
+
+            EnginePhysics.colliders.Add(World.world);
+            EngineOBJManager.objects.Add(World.world);
+
+            EnginePhysics.colliders.Add(World.world1);
+            EngineOBJManager.objects.Add(World.world1);
             #endregion
         }
 
@@ -93,15 +101,15 @@ namespace CPUEngine
         {
             if (e.Button.ToString() == "Left")
             {
-                if (!keys.Contains(-1)) keys.Remove(-1);
+                if (keys.Contains(-1)) keys.Remove(-1);
             }
             else if (e.Button.ToString() == "Middle")
             {
-                if (!keys.Contains(-3)) keys.Remove(-3);
+                if (keys.Contains(-3)) keys.Remove(-3);
             }
             else if (e.Button.ToString() == "Right")
             {
-                if (!keys.Contains(-2)) keys.Remove(-2);
+                if (keys.Contains(-2)) keys.Remove(-2);
             }
         }
 
@@ -123,10 +131,20 @@ namespace CPUEngine
             //EngineGraphics.ClearBufferSolid(Color.Black);
             EngineGraphics.ClearBufferWithImage(bg);
 
-            //EngineGraphics.DrawRectangleBrush(Player.y, Player.x, 100, 100, EngineGraphics.brush);
-            EngineGraphics.DrawRectangleCoordinatesImageExtra(Player.x, Player.y, 100, 100, Player.r, -1, 1, EngineGraphics.mc);
-            EngineGraphics.DrawRectangleCoordinatesBrush(GetCursor().X, GetCursor().Y, 10, 10, EngineGraphics.brush);
-            World.DrawWorld();
+            foreach(EngineOBJManager.OBJ temp in EngineOBJManager.objects)
+            {
+                if (temp.drawType == 1)
+                {
+                    EngineGraphics.DrawRectangleImageExtra(temp.garphics, temp.angle, temp.flipx, temp.flipy, EngineGraphics.sprites[temp.grapicsName]);
+                }
+                else if(temp.drawType == 2)
+                {
+                    EngineGraphics.DrawRectangleBrush(temp.garphics, EngineGraphics.brushes[temp.grapicsName]);
+                }
+            }
+
+            EngineGraphics.DrawRectangleCoordinatesImageExtra(Player.x, Player.y, 100, 100, Player.r, -1, 1, EngineGraphics.sprites["minecraft"]);
+            //EngineGraphics.DrawRectangleCoordinatesBrush(GetCursor().X, GetCursor().Y, 10, 10, EngineGraphics.brush);
 
             //Show new image
             pictureBox1.Image = EngineGraphics.buffers[EngineGraphics.currentBuffer];

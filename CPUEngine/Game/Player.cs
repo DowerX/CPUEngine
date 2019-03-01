@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Timers;
 using System.Drawing;
 using CPUEngine.Engine;
 
 namespace CPUEngine.Game
 {
-    public class Player : Form
+    public class Player
     {
         public static int x = 100;
         public static int y = 100;
@@ -24,10 +23,12 @@ namespace CPUEngine.Game
         //called every frame by timer from MainWindow
         public static void PlayerMove(object sender, ElapsedEventArgs e)
         {
-            if (MainWindow.keys.Contains(87) && EnginePhysics.RectangleCollision(collTop)) y -= speed / MainWindow.frametime;
-            if (MainWindow.keys.Contains(83) && EnginePhysics.RectangleCollision(collBottom)) y += speed / MainWindow.frametime;
-            if (MainWindow.keys.Contains(65) && EnginePhysics.RectangleCollision(collLeft)) x -= speed / MainWindow.frametime;
-            if (MainWindow.keys.Contains(68) && EnginePhysics.RectangleCollision(collRight)) x += speed / MainWindow.frametime;
+            if (MainWindow.keys.Contains(87) && EnginePhysics.RectangleCollision(collTop) == -1) y -= speed / MainWindow.frametime;
+            if (MainWindow.keys.Contains(83) && EnginePhysics.RectangleCollision(collBottom) == -1) y += speed / MainWindow.frametime;
+            if (MainWindow.keys.Contains(65) && EnginePhysics.RectangleCollision(collLeft) == -1) x -= speed / MainWindow.frametime;
+            if (MainWindow.keys.Contains(68) && EnginePhysics.RectangleCollision(collRight) == -1) x += speed / MainWindow.frametime;
+
+            Console.WriteLine(EnginePhysics.RectangleCollision(collBottom));
 
             //Update collider rectangle
             collBottom.X = x;
@@ -42,7 +43,7 @@ namespace CPUEngine.Game
             collRight.X = x+90;
             collRight.Y = y;
 
-            if (MainWindow.keys.Contains(69)) r += rspeed / MainWindow.frametime;
+            if (MainWindow.keys.Contains(-1)) r += rspeed / MainWindow.frametime;
         }
     }
 }

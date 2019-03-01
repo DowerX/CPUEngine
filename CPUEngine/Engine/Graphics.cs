@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using System;
+using System.Collections.Generic;
 
 //REMEMBER: THE ORIGO (0,0) IS THE TOP LEFT CORNER!
 //CLOCKVISE IS THE POSITVE DIRECTION FOR ROTATING
@@ -13,12 +13,15 @@ namespace CPUEngine.Engine
         public static Bitmap[] buffers = new Bitmap[2];
         static Graphics[] g = new Graphics[2];
 
+        public static Dictionary<string, Bitmap> sprites = new Dictionary<string, Bitmap>();
+        public static Dictionary<string, Brush> brushes = new Dictionary<string, Brush>();
+
         //custom
         #region
-        public static SolidBrush brush = new SolidBrush(Color.White);
-        public static Bitmap mc = new Bitmap(@"./minecraft.png");
-        public static Bitmap bgx = new Bitmap(@"./bgx.jpg");
-        public static TextureBrush bgxBrush = new TextureBrush(bgx);
+        //public static SolidBrush brush = new SolidBrush(Color.White);
+        //public static Bitmap mc = new Bitmap(@"./minecraft.png");
+        //public static Bitmap bgx = new Bitmap(@"./bgx.jpg");
+        //public static TextureBrush bgxBrush = new TextureBrush(bgx);
         #endregion
 
         public static bool Init(int w, int h)

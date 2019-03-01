@@ -5,16 +5,18 @@ namespace CPUEngine.Engine
 {
     public class EnginePhysics
     {
-        public static List<Rectangle> colliders = new List<Rectangle>();
+        public static List<EngineOBJManager.OBJ> colliders = new List<EngineOBJManager.OBJ>();
 
-        public static bool RectangleCollision(Rectangle rect)
+        public static int RectangleCollision(Rectangle rect)
         {
-            foreach(Rectangle temp in colliders)
+            for(int i = 0; i < colliders.Count; i++)
             {
-                temp.Intersect(rect);
-                if(temp.IsEmpty) return true;
+                if(colliders[i].collider != null)
+                {
+                    if (colliders[i].collider.IntersectsWith(rect)) return i;
+                }
             }
-            return false;
+            return -1;
         }
     }
 }
