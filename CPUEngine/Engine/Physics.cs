@@ -11,8 +11,13 @@ namespace CPUEngine.Engine
     {
         public static List<Rectangle> colliders = new List<Rectangle>();
 
-        public static bool RectangleCollisionTop(int x, int y, int width)
+        public static bool RectangleCollision(Rectangle rect)
         {
+            foreach(Rectangle temp in colliders)
+            {
+                temp.Intersect(rect);
+                if(temp.IsEmpty) return true;
+            }
             return false;
         }
     }

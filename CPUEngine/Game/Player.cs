@@ -9,7 +9,7 @@ namespace CPUEngine.Game
     {
         public static int x = 100;
         public static int y = 100;
-        public static int speed = 200; // px/sec
+        public static int speed = 400; // px/sec
         public static int rspeed = 90;
 
         public static int r = 0;
@@ -25,33 +25,10 @@ namespace CPUEngine.Game
         {
             EngineGraphics.DrawRectangleBrush(x+10, y, 80, 10, EngineGraphics.brush);
 
-            Rectangle tempBottom = Rectangle.Intersect(World.coll, collBottom);
-            Rectangle tempTop = Rectangle.Intersect(World.coll, collTop);
-            Rectangle tempLeft = Rectangle.Intersect(World.coll, collLeft);
-            Rectangle tempRight = Rectangle.Intersect(World.coll, collRight);
-
-            Console.WriteLine(tempBottom.IsEmpty);
-
-
-            #region
-            //if (!inter.IsEmpty) Console.WriteLine("COLLISION");
-
-            //if (MainWindow.keys.Contains(87) && !EnginePhysics.RectangleCollisionTop(x,y,50)) x -= speed / MainWindow.frametime;
-            //if (MainWindow.keys.Contains(83) && !EnginePhysics.RectangleCollisionBottom(x, y, 50,50)) x += speed / MainWindow.frametime;
-            //if (MainWindow.keys.Contains(65) && !EnginePhysics.RectangleCollisionRight(x, y, 50,50)) y -= speed / MainWindow.frametime;
-            //if (MainWindow.keys.Contains(68) && !EnginePhysics.RectangleCollisionLeft(x, y, 50,50)) y += speed / MainWindow.frametime;
-
-            //Console.WriteLine("1" + EnginePhysics.RectangleCollisionTop(x, y, 50).ToString());
-            //Console.WriteLine("2" + EnginePhysics.RectangleCollisionBottom(x, y, 50, 50).ToString());
-            //Console.WriteLine("3" + EnginePhysics.RectangleCollisionRight(x, y, 50, 50).ToString());
-            //Console.WriteLine("4" + EnginePhysics.RectangleCollisionLeft(x, y, 50, 50).ToString());
-            #endregion
-            if (MainWindow.keys.Contains(87) && tempTop.IsEmpty) y -= speed / MainWindow.frametime;
-            if (MainWindow.keys.Contains(83) && tempBottom.IsEmpty) y += speed / MainWindow.frametime;
-            if (MainWindow.keys.Contains(65) && tempLeft.IsEmpty) x -= speed / MainWindow.frametime;
-            if (MainWindow.keys.Contains(68) && tempRight.IsEmpty) x += speed / MainWindow.frametime;
-
-
+            if (MainWindow.keys.Contains(87) && EnginePhysics.RectangleCollision(collTop)) y -= speed / MainWindow.frametime;
+            if (MainWindow.keys.Contains(83) && EnginePhysics.RectangleCollision(collBottom)) y += speed / MainWindow.frametime;
+            if (MainWindow.keys.Contains(65) && EnginePhysics.RectangleCollision(collLeft)) x -= speed / MainWindow.frametime;
+            if (MainWindow.keys.Contains(68) && EnginePhysics.RectangleCollision(collRight)) x += speed / MainWindow.frametime;
 
             //Update collider rectangle
             collBottom.X = x;

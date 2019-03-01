@@ -11,7 +11,7 @@ namespace CPUEngine
     public partial class MainWindow : Form
     {
         //Timer that controls rendering, other synced tasks (ex: player movement, physics)
-        public static int frametime = 17;   //Put in the optimal frametime (60 FPS => 16ms (but use 17ms pls), 30FPS => )
+        public static int frametime = 33;   //Put in the optimal frametime (60 FPS => 16ms, 30FPS => 33ms)
         System.Timers.Timer timer = new System.Timers.Timer(frametime);
 
         //Key states
@@ -26,6 +26,7 @@ namespace CPUEngine
         public MainWindow()
         {
             InitializeComponent();
+            EngineGraphics.Init(1280, 720);
 
             //Set up Key Management
             KeyDown += new KeyEventHandler(ManageKeysDown);
@@ -48,7 +49,7 @@ namespace CPUEngine
             EngineAudio.Play("music", musicP);
 
 
-            //EnginePhysics.colliders.Add(World.coll);
+            EnginePhysics.colliders.Add(World.coll);
             #endregion
         }
 
@@ -76,11 +77,11 @@ namespace CPUEngine
             EngineGraphics.DrawRectangleImageExtra(Player.x, Player.y, 100, 100, Player.r, -1, 1, EngineGraphics.mc);
             World.DrawWorld();
 
-            //Finished rendering
-            EngineGraphics.CopyBuffer();
-
             //Show new image
-            pictureBox1.Image = EngineGraphics.screen;
+            pictureBox1.Image = EngineGraphics.buffers[EngineGraphics.currentBuffer];
+
+            //Finished rendering
+            EngineGraphics.SwitchBuffers();
         }
     }
 }

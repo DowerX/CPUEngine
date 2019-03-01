@@ -8,10 +8,10 @@ namespace CPUEngine.Engine
 {
     public class EngineGraphics
     {
-        public static Bitmap screen = new Bitmap(1280, 720);
-        static Bitmap buffer = new Bitmap(1280, 720);
+        public static int currentBuffer = 0;
 
-        static Graphics g = Graphics.FromImage(buffer);
+        public static Bitmap[] buffers = new Bitmap[2];
+        static Graphics[] g = new Graphics[2];
 
         //custom
         #region
@@ -21,29 +21,47 @@ namespace CPUEngine.Engine
         public static TextureBrush bgxBrush = new TextureBrush(bgx);
         #endregion
 
-        public static void CopyBuffer()
+        public static bool Init(int w, int h)
         {
-            screen = buffer;
+            try
+            {
+                buffers[0] = new Bitmap(w, h);
+                buffers[1] = new Bitmap(w, h);
+                g[0] = Graphics.FromImage(buffers[0]);
+                g[1] = Graphics.FromImage(buffers[1]);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        public static void SwitchBuffers()
+        {
+            if (currentBuffer == 0) currentBuffer = 1;
+            else currentBuffer = 0;
         }
 
         public static void ClearBufferSolid(Color color)
         {
-            g.Clear(color);
+            g[currentBuffer].Clear(color);
         }
 
         public static void ClearBufferWithImage(Bitmap img)
         {
-            g.DrawImageUnscaled(img, 0, 0);
+            g[currentBuffer].DrawImageUnscaled(img, 0, 0);
         }
 
         public static void DrawRectangleBrush(int x, int y, int w, int h, Brush b)
         {
-            g.FillRectangle(b, x, y, w, h);
+            g[currentBuffer].FillRectangle(b, x, y, w, h);
         }
 
         public static void DrawRectangleImage(int x, int y, int w, int h, Bitmap img)
         {
-            g.DrawImage(img, x, y, w, h);
+            g[currentBuffer].DrawImage(img, x, y, w, h);
         }
 
         public static void DrawRectangleImageExtra(int x, int y, int w, int h, float angle, int flipx, int flipy, Bitmap img)
@@ -58,7 +76,7 @@ namespace CPUEngine.Engine
                 }
                 if (flipx == -1) temp.RotateFlip(RotateFlipType.Rotate180FlipX);
                 if (flipy == -1) temp.RotateFlip(RotateFlipType.Rotate180FlipY);
-                g.DrawImage(temp, x, y, w, h);
+                g[currentBuffer].DrawImage(temp, x, y, w, h);
             }
         }
     }
