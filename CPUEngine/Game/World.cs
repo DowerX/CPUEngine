@@ -9,7 +9,7 @@ namespace CPUEngine.Game
 
         public static void DrawWorld()
         {
-            EngineGraphics.DrawRectangleBrush(0,710,1280,10,EngineGraphics.brush);
+            EngineGraphics.DrawRectangleBrush(coll,EngineGraphics.brush);
         }
     }
 }

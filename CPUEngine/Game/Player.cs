@@ -23,8 +23,6 @@ namespace CPUEngine.Game
         //called every frame by timer from MainWindow
         public static void PlayerMove(object sender, ElapsedEventArgs e)
         {
-            EngineGraphics.DrawRectangleBrush(x+10, y, 80, 10, EngineGraphics.brush);
-
             if (MainWindow.keys.Contains(87) && EnginePhysics.RectangleCollision(collTop)) y -= speed / MainWindow.frametime;
             if (MainWindow.keys.Contains(83) && EnginePhysics.RectangleCollision(collBottom)) y += speed / MainWindow.frametime;
             if (MainWindow.keys.Contains(65) && EnginePhysics.RectangleCollision(collLeft)) x -= speed / MainWindow.frametime;

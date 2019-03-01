@@ -54,17 +54,19 @@ namespace CPUEngine.Engine
             g[currentBuffer].DrawImageUnscaled(img, 0, 0);
         }
 
-        public static void DrawRectangleBrush(int x, int y, int w, int h, Brush b)
+        //Rectangle by coordinates
+        #region
+        public static void DrawRectangleCoordinatesBrush(int x, int y, int w, int h, Brush b)
         {
             g[currentBuffer].FillRectangle(b, x, y, w, h);
         }
 
-        public static void DrawRectangleImage(int x, int y, int w, int h, Bitmap img)
+        public static void DrawRectangleCoordinatesImage(int x, int y, int w, int h, Bitmap img)
         {
             g[currentBuffer].DrawImage(img, x, y, w, h);
         }
 
-        public static void DrawRectangleImageExtra(int x, int y, int w, int h, float angle, int flipx, int flipy, Bitmap img)
+        public static void DrawRectangleCoordinatesImageExtra(int x, int y, int w, int h, float angle, int flipx, int flipy, Bitmap img)
         {
             using (Bitmap temp = new Bitmap(w, h))
             {
@@ -79,5 +81,35 @@ namespace CPUEngine.Engine
                 g[currentBuffer].DrawImage(temp, x, y, w, h);
             }
         }
+        #endregion
+
+        //Rectangle
+        #region
+        public static void DrawRectangleBrush(Rectangle rect, Brush b)
+        {
+            g[currentBuffer].FillRectangle(b, rect);
+        }
+
+        public static void DrawRectangleImage(Rectangle rect, Bitmap img)
+        {
+            g[currentBuffer].DrawImage(img, rect);
+        }
+
+        public static void DrawRectangleImageExtra(Rectangle rect, float angle, int flipx, int flipy, Bitmap img)
+        {
+            using (Bitmap temp = new Bitmap(rect.Width, rect.Height))
+            {
+                using (Graphics _g = Graphics.FromImage(temp))
+                {
+                    _g.TranslateTransform((float)rect.Width / 2, (float)rect.Height / 2);
+                    _g.RotateTransform(angle * flipx * flipy);
+                    _g.DrawImage(img, -(float)rect.Width / 2, -(float)rect.Height / 2, rect.Width, rect.Height);
+                }
+                if (flipx == -1) temp.RotateFlip(RotateFlipType.Rotate180FlipX);
+                if (flipy == -1) temp.RotateFlip(RotateFlipType.Rotate180FlipY);
+                g[currentBuffer].DrawImage(temp, rect.X, rect.Y, rect.Width, rect.Width);
+            }
+        }
+        #endregion
     }
 }

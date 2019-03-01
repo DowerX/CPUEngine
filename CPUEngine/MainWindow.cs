@@ -44,10 +44,10 @@ namespace CPUEngine
             #region
 
             timer.Elapsed += new ElapsedEventHandler(Player.PlayerMove);
-            int musicP = EngineAudio.CreatePlayer();
-            EngineAudio.AddSound("music", @"./xd.wav");
-            EngineAudio.Play("music", musicP);
 
+            //int musicP = EngineAudio.CreatePlayer();
+            //EngineAudio.AddSound("music", @"./xd.wav");
+            //EngineAudio.Play("music", musicP);
 
             EnginePhysics.colliders.Add(World.coll);
             #endregion
@@ -74,13 +74,13 @@ namespace CPUEngine
             EngineGraphics.ClearBufferWithImage(bg);
 
             //EngineGraphics.DrawRectangleBrush(Player.y, Player.x, 100, 100, EngineGraphics.brush);
-            EngineGraphics.DrawRectangleImageExtra(Player.x, Player.y, 100, 100, Player.r, -1, 1, EngineGraphics.mc);
+            EngineGraphics.DrawRectangleCoordinatesImageExtra(Player.x, Player.y, 100, 100, Player.r, -1, 1, EngineGraphics.mc);
             World.DrawWorld();
 
             //Show new image
             pictureBox1.Image = EngineGraphics.buffers[EngineGraphics.currentBuffer];
 
-            //Finished rendering
+            //Finished rendering, switch buffers
             EngineGraphics.SwitchBuffers();
         }
     }
