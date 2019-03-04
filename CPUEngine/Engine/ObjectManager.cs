@@ -15,7 +15,7 @@ namespace CPUEngine.Engine
         {
             //Informations
             public int id;
-            public string[] tags;
+            public List<string> tags;
 
             //Graphcis
             public float angle = 0;

@@ -53,6 +53,7 @@ namespace CPUEngine
             #region
 
             timer.Elapsed += new ElapsedEventHandler(Player.PlayerMove);
+            timer.Elapsed += new ElapsedEventHandler(World.MoveEnemys);
 
             //int musicP = EngineAudio.CreatePlayer();
             //EngineAudio.AddSound("music", @"./xd.wav");
@@ -64,8 +65,9 @@ namespace CPUEngine
             EnginePhysics.colliders.Add(World.world);
             EngineOBJManager.objects.Add(World.world);
 
-            EnginePhysics.colliders.Add(World.world1);
-            EngineOBJManager.objects.Add(World.world1);
+            EnginePhysics.colliders.Add(World.enemyOBJ);
+            EngineOBJManager.objects.Add(World.enemyOBJ);
+            World.enemys.Add(World.enemyOBJ);
             #endregion
         }
 
@@ -144,11 +146,6 @@ namespace CPUEngine
 
             //Draw player on top of everything
             EngineGraphics.DrawRectangleCoordinatesImageExtra(Player.x, Player.y, 100, 100, 0, -1, 1, EngineGraphics.sprites["minecraft"]);
-
-            //EngineGraphics.DrawRectangleBrush(Player.collBottom, EngineGraphics.brushes["white"]);
-            //EngineGraphics.DrawRectangleBrush(Player.collTop, EngineGraphics.brushes["white"]);
-            //EngineGraphics.DrawRectangleBrush(Player.collLeft, EngineGraphics.brushes["white"]);
-            //EngineGraphics.DrawRectangleBrush(Player.collRight, EngineGraphics.brushes["white"]);
 
             //Show new image
             pictureBox1.Image = EngineGraphics.buffers[EngineGraphics.currentBuffer];
