@@ -13,14 +13,22 @@ namespace CPUEngine.Engine
 
         public class OBJ
         {
+            //Informations
             public int id;
+            public string[] tags;
+
+            //Graphcis
             public float angle = 0;
             public int flipx = 1;
             public int flipy = 1;
-            public Rectangle garphics;
-            public Rectangle collider;
-            public string grapicsName;
             public int drawType = 1;
+            public Rectangle garphics;
+            public string grapicsName;
+
+            //Physics
+            public Rectangle collider;
+
+
         }
 
         public OBJ FindByID(List<OBJ> objs, int id)

@@ -128,7 +128,6 @@ namespace CPUEngine
         private void Render(object sender, ElapsedEventArgs e)
         {
             //Clearing
-            //EngineGraphics.ClearBufferSolid(Color.Black);
             EngineGraphics.ClearBufferWithImage(bg);
 
             foreach(EngineOBJManager.OBJ temp in EngineOBJManager.objects)
@@ -143,8 +142,13 @@ namespace CPUEngine
                 }
             }
 
-            EngineGraphics.DrawRectangleCoordinatesImageExtra(Player.x, Player.y, 100, 100, Player.r, -1, 1, EngineGraphics.sprites["minecraft"]);
-            //EngineGraphics.DrawRectangleCoordinatesBrush(GetCursor().X, GetCursor().Y, 10, 10, EngineGraphics.brush);
+            //Draw player on top of everything
+            EngineGraphics.DrawRectangleCoordinatesImageExtra(Player.x, Player.y, 100, 100, 0, -1, 1, EngineGraphics.sprites["minecraft"]);
+
+            //EngineGraphics.DrawRectangleBrush(Player.collBottom, EngineGraphics.brushes["white"]);
+            //EngineGraphics.DrawRectangleBrush(Player.collTop, EngineGraphics.brushes["white"]);
+            //EngineGraphics.DrawRectangleBrush(Player.collLeft, EngineGraphics.brushes["white"]);
+            //EngineGraphics.DrawRectangleBrush(Player.collRight, EngineGraphics.brushes["white"]);
 
             //Show new image
             pictureBox1.Image = EngineGraphics.buffers[EngineGraphics.currentBuffer];
