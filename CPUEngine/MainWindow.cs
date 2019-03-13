@@ -55,19 +55,16 @@ namespace CPUEngine
             timer.Elapsed += new ElapsedEventHandler(Player.PlayerMove);
             timer.Elapsed += new ElapsedEventHandler(World.MoveEnemys);
 
-            //int musicP = EngineAudio.CreatePlayer();
-            //EngineAudio.AddSound("music", @"./xd.wav");
-            //EngineAudio.Play("music", musicP);
+            int musicP = EngineAudio.CreatePlayer();
+            EngineAudio.AddSound("music", @"./megalovania.wav");
+            EngineAudio.Play("music", musicP);
 
-            EngineGraphics.sprites.Add("minecraft", new Bitmap(@"./minecraft.png"));
-            EngineGraphics.brushes.Add("white",new SolidBrush(Color.White));
+            EngineGraphics.sprites.Add("sans", new Bitmap(@"./sans.png"));
+            //EngineGraphics.brushes.Add("dirt",new TextureBrush(new Bitmap(@"./dirt.jpg")));
+            EngineGraphics.brushes.Add("white", new SolidBrush(Color.White));
 
-            EnginePhysics.colliders.Add(World.world);
-            EngineOBJManager.objects.Add(World.world);
+            World.LoadWorld(@"./map.txt");
 
-            EnginePhysics.colliders.Add(World.enemyOBJ);
-            EngineOBJManager.objects.Add(World.enemyOBJ);
-            World.enemys.Add(World.enemyOBJ);
             #endregion
         }
 
@@ -130,13 +127,13 @@ namespace CPUEngine
         private void Render(object sender, ElapsedEventArgs e)
         {
             //Clearing
-            EngineGraphics.ClearBufferWithImage(bg);
+            EngineGraphics.ClearBufferSolid(Color.Black);
 
             foreach(EngineOBJManager.OBJ temp in EngineOBJManager.objects)
             {
                 if (temp.drawType == 1)
                 {
-                    EngineGraphics.DrawRectangleImageExtra(temp.garphics, temp.angle, temp.flipx, temp.flipy, EngineGraphics.sprites[temp.grapicsName]);
+                    EngineGraphics.DrawRectangleCoordinatesBrush(temp.garphics.X,temp.garphics.Y, temp.garphics.Width, temp.garphics.Height, EngineGraphics.brushes["white"]);
                 }
                 else if(temp.drawType == 2)
                 {
@@ -145,7 +142,7 @@ namespace CPUEngine
             }
 
             //Draw player on top of everything
-            EngineGraphics.DrawRectangleCoordinatesImageExtra(Player.x, Player.y, 100, 100, 0, -1, 1, EngineGraphics.sprites["minecraft"]);
+            EngineGraphics.DrawRectangleCoordinatesImageExtra(500, Player.y, 100, 100, 0, 1, 1, EngineGraphics.sprites["sans"]);
 
             //Show new image
             pictureBox1.Image = EngineGraphics.buffers[EngineGraphics.currentBuffer];

@@ -13,6 +13,7 @@ namespace CPUEngine.Engine
             {
                 if(colliders[i].collider != null)
                 {
+                    if (colliders[i].collider == rect) continue;
                     if (colliders[i].collider.IntersectsWith(rect)) return i;
                 }
             }

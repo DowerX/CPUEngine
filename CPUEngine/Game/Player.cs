@@ -8,8 +8,8 @@ namespace CPUEngine.Game
     public class Player
     {
         //Physics
-        public static int x = 100;
-        public static int y = 100;
+        public static int x = 500;
+        public static int y = 300;
         private static int speed = 200; // px/sec
 
         private static float jumpTimer = 0;
@@ -28,6 +28,7 @@ namespace CPUEngine.Game
         //called every frame by timer from MainWindow
         public static void PlayerMove(object sender, ElapsedEventArgs e)
         {
+            x = 0;
             if (MainWindow.keys.Contains(65) && EnginePhysics.RectangleCollision(collLeft) == -1) x -= speed / MainWindow.frametime;
             if (MainWindow.keys.Contains(68) && EnginePhysics.RectangleCollision(collRight) == -1) x += speed / MainWindow.frametime;
 
@@ -35,17 +36,26 @@ namespace CPUEngine.Game
             CheckCollisions();
 
             //Update colliders
-            collBottom.X = x+10;
+            //collBottom.X = x+10;
             collBottom.Y = y+90;
 
-            collTop.X = x+10;
+            //collTop.X = x+10;
             collTop.Y = y;
 
-            collLeft.X = x;
+            //collLeft.X = x;
             collLeft.Y = y+10;
 
-            collRight.X = x+90;
+            //collRight.X = x+90;
             collRight.Y = y+10;
+
+            foreach(EngineOBJManager.OBJ temp in EngineOBJManager.objects)
+            {
+                if(temp.tags.Contains("world") || temp.tags.Contains("enemy"))
+                {
+                    temp.garphics.X -= x;
+                    temp.collider.X -= x;
+                }
+            }
         }
 
         private static void CheckCollisions()
